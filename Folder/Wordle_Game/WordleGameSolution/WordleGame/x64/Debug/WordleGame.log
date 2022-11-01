@@ -1,0 +1,5 @@
+﻿  WordleGame.cpp
+C:\Users\eduar\Documents\GitHub\Wordle-ASC\Folder\Wordle_Game\WordleGameSolution\WordleGame\WordleGame.cpp(15,7): warning C4101: 'cuv': unreferenced local variable
+C:\Users\eduar\Documents\GitHub\Wordle-ASC\Folder\Wordle_Game\WordleGameSolution\WordleGame\WordleGame.cpp(16,7): warning C4101: 'guess': unreferenced local variable
+C:\Users\eduar\Documents\GitHub\Wordle-ASC\Folder\Wordle_Game\WordleGameSolution\WordleGame\WordleGame.cpp(16,13): warning C4101: 'sol': unreferenced local variable
+  WordleGame.vcxproj -> C:\Users\eduar\Documents\GitHub\Wordle-ASC\Folder\Wordle_Game\WordleGameSolution\x64\Debug\WordleGame.exe

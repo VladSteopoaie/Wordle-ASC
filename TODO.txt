@@ -3,10 +3,13 @@
 ########################
 
 
-
-
-
-
+Varianta Python:
+	Text colorat(pentru a vedea mai usor literele care sunt pe poz buna sau care doar se afla in cuvant)
+	Vectorul de frecventa nu e codat 100% corect, scopul sau e de a arata si de cate ori apare maxim o litera ghicita in cuvant
+	(ex: daca solutia e LIANE si pui de la tastatura ARATA, sa nu mai spuna de A de la inceput si de la final ca sunt buni. Altfel
+	da impresia ca solutia are mai multi A.) 
+	Posibil o explicatie a jocului inainte sa inceapa(cum functioneaza, cum iti dai seama daca o litera e pe pozitia buna sau
+	doar in cuvant)
 
 
 
