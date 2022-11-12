@@ -1,0 +1,3 @@
+- Backtraking cu produs cartezian
+
+-
