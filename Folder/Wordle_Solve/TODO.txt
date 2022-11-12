@@ -1,3 +1,5 @@
 - Backtraking cu produs cartezian
 
--
+-Declarare Constante X (Vlad)
+
+-Initializare fisiere X (Vlad)
