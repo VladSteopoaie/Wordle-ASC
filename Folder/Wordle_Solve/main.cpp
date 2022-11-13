@@ -3,8 +3,8 @@
 
 //Constante
 const int NR_CUV = 11454; //Numarul de cuvinte din fisier 
-const int NR_LITERE =  NR_CUV * 5; //Numarul de litere din fisier
-const int LG_CUV = 5;
+const int LG_CUV = 5; //Lungimea unui cuvant
+const int NR_LITERE =  NR_CUV * LG_CUV; //Numarul de litere din fisier
 
 
 ///FUNCTII///
@@ -82,29 +82,34 @@ void Back(int k, int *x, char *cuv, float &entropie)
     if (k == 5)
     {
         /*
-            -> FISIER X
-            -> CAUT CUVINTELE CARE RESPECTA REGULA DIN X SI SA LE NUMAR X
-            -> CALCULAM PROBABILITATEA = (NR CUV NUMARATE / NR CUV TOTAL)
-            -> CALCULAM SI INFORMATIA = LOG2(1 / PROBABILITATE)
-            -> SUMA DE PROBABILITATI (ENTROPIA) = SUM(PROBABILITATE * INFORMATIE)
+            -> 1. DESCHIDEM FISIER X
+            -> 2. CAUT CUVINTELE CARE RESPECTA REGULA DIN X SI SA LE NUMAR X
+            -> 3. CALCULAM PROBABILITATEA = (NR CUV NUMARATE / NR CUV TOTAL)
+            -> 4. CALCULAM SI INFORMATIA = LOG2(1 / PROBABILITATE)
+            -> 5. SUMA DE PROBABILITATI (ENTROPIA) = SUM(PROBABILITATE * INFORMATIE)
         */
+        //1
         std::ifstream f1("cuvinte1.txt");
         char s[6];
         int contor = 0;
+        
+        //2
         while(f1 >> s)
         {
             if(VerificareReg(x, cuv, s))
                 contor ++;
         }
+        //3
+        //4
+        //5
 
-        std::cout << cuv << " " << contor << '\n';
-        for(int i = 0; i < 5; i ++)
-            std::cout << x[i] << " ";
-        std::cout << '\n';
+        f1.close();
+        
 
     }
     else
     {
+        //backtraking normal de produs cartezian
         x[k] = -1;
         while (x[k] < 2)
         {
@@ -119,8 +124,10 @@ void Back(int k, int *x, char *cuv, float &entropie)
 
 int main()
 {
+    //Initializam fisierele inainte sa inceapa programul
     InitFiles();
 
+    //Deschidem fisierul si vrem sa calculam entropia pentru toate cuvintele din fisier
     std::ifstream f1("cuvinte1.txt");
     char cuv[6];
     while(f1 >> cuv)

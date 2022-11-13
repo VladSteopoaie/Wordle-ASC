@@ -1,5 +1,21 @@
-- Backtraking cu produs cartezian
+
+TASK-URI MIHAI:
+
+-Backtraking cu produs cartezian X (Mihai)
+
+
+TASK-URI VLAD:
 
 -Declarare Constante X (Vlad)
 
 -Initializare fisiere X (Vlad)
+
+
+TASK-URI COMUNE:
+
+-Calculare entropie cuvinte (Vlad si Mihai)
+  -> 1. DESCHIDEM FISIER X (Vlad si Mihai)
+  -> 2. CAUT CUVINTELE CARE RESPECTA REGULA DIN X SI SA LE NUMAR X (Vlad si Mihai
+  -> 3. CALCULAM PROBABILITATEA = (NR CUV NUMARATE / NR CUV TOTAL)
+  -> 4. CALCULAM SI INFORMATIA = LOG2(1 / PROBABILITATE)
+  -> 5. SUMA DE PROBABILITATI (ENTROPIA) = SUM(PROBABILITATE * INFORMATIE)
