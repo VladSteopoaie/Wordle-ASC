@@ -12,7 +12,7 @@ using namespace std;
 
 ifstream f("../cuvinte_wordle.txt");
 
-bool in_menu=true,in_game=false,in_solver=false,verif=false,ok=false; //pentru a vedea in ce stadiu este jocul
+bool in_menu=true,in_game=false,in_solver=false,verif=false,ok=false,ok_guess=true; //pentru a vedea in ce stadiu este jocul
 char text[500];
 //pentru textul din meniu si instructiuni va fi folosita functia sleep, pentru a nu afisa un wall of text instant.
 //de adaugat lista de cuvinte prin citire de fisier
@@ -55,16 +55,39 @@ void menu_text() //introducerea jocului
 
 void instructions() //cum se joca jocul. de modificat in functie de cum vor fi evidentiate literele corecte in joc
 {
-    cout<<"In acest joc, scopul este simplu: Incearca sa ghicesti un cuvant de 5 litere!"<<'\n';
-    cout<<"Insa, incercarile trebuie sa fie numai cuvinte de 5 litere existente in dictionarul limbii romane!"<<'\n';
-    cout<<"De fiecare data cand introduci un cuvant, ti se vor da urmatoarele informatii:"<<'\n';
-    cout<<"1) Daca o litera din cuvantul introdus de tine se afla in cuvantul care trebuie ghicit, aceasta va fi evidentiata cu galben"<<'\n';
-    //Sleep(1000)
-    cout<<"2) Daca litera, in plus, se afla pe aceeasi pozitie ca in cuvantul care trebuie ghicit, aceasta va fi evidentiata cu verde"<<'\n';
-    //Sleep(1000)
-    cout<<"3) Daca litera nu apartine deloc acelui cuvant, atunci culoarea ei ramane neschimbata"<<'\n';
-    cout<<"Nota: jocul nu este case sensitive, asa ca literele mici vor fi tratate ca si cum ar fi litere mari"<<'\n';
-    cout<<"Exemplu de inputuri corecte: Sapte, paine, CRUCE, fOaMe"<<'\n';
+    strcpy(text,"In acest joc, scopul este simplu: Incearca sa ghicesti un cuvant de 5 litere! ");
+    for (int i=0;i<strlen(text);i++)
+    cout<<text[i],usleep(30000);
+    cout<<'\n';
+    strcpy(text,"Insa, incercarile trebuie sa fie numai cuvinte de 5 litere existente in dictionarul limbii romane!");
+    for (int i=0;i<strlen(text);i++)
+        cout<<text[i],usleep(30000);
+    cout<<'\n';
+    strcpy(text,"De fiecare data cand introduci un cuvant, ti se vor da urmatoarele informatii:");
+    for (int i=0;i<strlen(text);i++)
+        cout<<text[i],usleep(30000);
+    cout<<'\n';
+    strcpy(text,"1) Daca o litera din cuvantul introdus de tine se afla in cuvantul care trebuie ghicit, aceasta va fi evidentiata cu galben");
+    for (int i=0;i<strlen(text);i++)
+        cout<<text[i],usleep(30000);
+    cout<<'\n';
+    strcpy(text,"2) Daca litera, in plus, se afla pe aceeasi pozitie ca in cuvantul care trebuie ghicit, aceasta va fi evidentiata cu verde");
+    for (int i=0;i<strlen(text);i++)
+        cout<<text[i],usleep(30000);
+    cout<<'\n';
+    strcpy(text,"3) Daca litera nu apartine deloc acelui cuvant, atunci culoarea ei ramane neschimbata");
+    for (int i=0;i<strlen(text);i++)
+        cout<<text[i],usleep(30000);
+    cout<<'\n';
+    strcpy(text,"Nota: jocul nu este case sensitive, asa ca literele mici vor fi tratate ca si cum ar fi litere mari");
+    for (int i=0;i<strlen(text);i++)
+        cout<<text[i],usleep(30000);
+    cout<<'\n';
+    strcpy(text,"Exemplu de inputuri corecte: Sapte, paine, CRUCE, fOaMe");
+    for (int i=0;i<strlen(text);i++)
+        cout<<text[i],usleep(30000);
+    cout<<'\n';
+    cout<<'\n';
 
 }
 
@@ -137,41 +160,73 @@ void word_verifier(string correct_word, string guess_word, bool &verif){
 
 
 int main()
-{
+{char s[25],cuv[25],guess[25];  //acest s e folosit PENTRU MENU INPUTS.
+int contor=0;
     srand(time(NULL));
     menu_text();
-    char s[25],cuv[25],guess[25]; //eventual va fi alocat dinamic. acest s e folosit PENTRU MENU INPUTS.
     while(in_menu)
     {
+        strcpy(text,"Ce vrei sa faci? Scrie aici: ");
+        for (int i=0;i<strlen(text);i++)
+            cout<<text[i],usleep(30000);
         cin.getline(s,25);
         uppercase(s);
         menu_checker(s);
 
     }
+
     while(in_game) //aici va incepe jocul jucat de o persoana
     {
         if (ok==false)
             word_getter(cuv),cout<<'\n',ok=true;
-        strcpy(text,"Scrie un cuvant: ");
+        strcpy(text,"Ai incercat sa ghicesti cuvantul de ");
+        for (int i=0;i<strlen(text);i++)
+            cout<<text[i],usleep(30000);
+        cout<<contor;
+        strcpy(text," ori");
         for (int i=0;i<strlen(text);i++)
             cout<<text[i],usleep(30000);
         cout<<'\n';
+        strcpy(text,"Scrie un cuvant: ");
+        for (int i=0;i<strlen(text);i++)
+            cout<<text[i],usleep(30000);
         cin>>guess;
         uppercase(guess);
-        word_verifier(cuv,guess,verif);
+
+             /// functia pentru verificarea validitatii cuvantului aici
+        contor++;
+        word_verifier(cuv,guess,verif); //verifica apartenenta literelor prin functia word_getter. bineinteles si guess-ul va fi case insensitive
         cout<<'\n';
-     //de facut functiile pentru verificarea validitatii cuvantului si verificarea literelor
-        if (verif==true)
+        if (verif==true) //daca a gasit cuvantul potrivit
         {
+            ok_guess=true;
             strcpy(text,"Felicitari, ai gasi cuvantul!");
             for (int i=0;i<strlen(text);i++)
                 cout<<text[i],usleep(30000);
-            in_game=false;
+            cout<<'\n';
+            strcpy(text,"Vrei sa mai joci o data? DA/NU");
+            for (int i=0;i<strlen(text);i++)
+                cout<<text[i],usleep(30000);
+            cout<<'\n';
+            while (ok_guess) //aici va verifica daca userul mai vrea sa joace din nou sau nu
+            {
+                cin>>guess;
+                uppercase(guess);
+                if (strcmp(guess,"NU")==0) //daca jucatorul scrie NU
+                    in_game=false,ok_guess=false;
+                else if (strcmp(guess,"DA")==0) //daca jucatorul scrie DA
+                    in_game=true,ok_guess=false,ok=false,verif=false,contor=0; //resetarea valorilor pentru ca jocul sa o ia de la capat
+                else //in caz ca scrie altceva
+                    cout<<"Te rog, scrie DA/NU!"<<'\n';
+            }
         }
-
     }
+
     while(in_solver) //aici sa se desfasoare activitatea solverului(de modificat in urma sfatuirilor! :) )"
     {
         cout<<"De implementat"<<'\n';
     }
+    strcpy(text,"Joc terminat!");
+    for (int i=0;i<strlen(text);i++)
+        cout<<text[i],usleep(30000);
 }
