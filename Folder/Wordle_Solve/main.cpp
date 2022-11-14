@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <cmath>
 
 //Constante
 const int NR_CUV = 11454; //Numarul de cuvinte din fisier 
@@ -72,19 +73,18 @@ bool VerificareReg(int *reg, char *cuv_baza, char *cuv_curent)
 }
 
 //Backtraking
-void Back(int k, int *x, char *cuv, float &entropie)
+void Back(int k, int *x, char *cuv, double &entropie)
 {
     //Conventie: 
     //0 - gri (nu se afla in cuvant)
     //1 - galben (se afla undeva in cuvant dar nu pe pozitia respectiva)
     //2 - verde (se afla pe pozitia respectiva)
-    int i;
-    if (k == 5)
+    if (k > 4)
     {
         /*
             -> 1. DESCHIDEM FISIER X
             -> 2. CAUT CUVINTELE CARE RESPECTA REGULA DIN X SI SA LE NUMAR X
-            -> 3. CALCULAM PROBABILITATEA = (NR CUV NUMARATE / NR CUV TOTAL)
+            -> 3. CALA = (NR CUV NUMARATE / NR CUV TOTAL)
             -> 4. CALCULAM SI INFORMATIA = LOG2(1 / PROBABILITATE)
             -> 5. SUMA DE PROBABILITATI (ENTROPIA) = SUM(PROBABILITATE * INFORMATIE)
         */
@@ -92,7 +92,6 @@ void Back(int k, int *x, char *cuv, float &entropie)
         std::ifstream f1("cuvinte1.txt");
         char s[6];
         int contor = 0;
-        
         //2
         while(f1 >> s)
         {
@@ -100,9 +99,13 @@ void Back(int k, int *x, char *cuv, float &entropie)
                 contor ++;
         }
         //3
+        double probabilitate = (double)contor / NR_CUV;
         //4
-        //5
-
+        if(probabilitate > 0){
+            float informatie = -log2(probabilitate);
+            //5
+            entropie += probabilitate * informatie;
+        }
         f1.close();
         
 
@@ -124,19 +127,24 @@ void Back(int k, int *x, char *cuv, float &entropie)
 
 int main()
 {
-    //Initializam fisierele inainte sa inceapa programul
+
+    // Initializam fisierele inainte sa inceapa programul
     InitFiles();
 
-    //Deschidem fisierul si vrem sa calculam entropia pentru toate cuvintele din fisier
+    // Deschidem fisierul si vrem sa calculam entropia pentru toate cuvintele din fisier
     std::ifstream f1("cuvinte1.txt");
+    std::ofstream f2("entropie_cuvinte.txt");
     char cuv[6];
+    int i = 1;
     while(f1 >> cuv)
     {
         int x[5] = {0, 0, 0, 0, 0};
-        float entropie = 0.0f;
+        double entropie = 0.0f;
         Back(0, x, cuv, entropie);
+        f2 << cuv << " " << entropie << '\n';
+        printf("Gata: %d\n", i++);
     }
-
+    
 
     return 0;
 }
