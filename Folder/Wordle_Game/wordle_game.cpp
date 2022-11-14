@@ -34,15 +34,15 @@ void word_verifier(string correct_word, string guess_word, bool &verif){
         if(state[i] == 'G'){
             cnt ++;                             // numar cate pozitii din cuvinte au aceeasi litera
             SetConsoleTextAttribute(h, 10);     //setez culoarea verde la afisare
-            cout << guess_word[i], Sleep(100);
+            cout << guess_word[i], Sleep(60);
         }
         else if(state[i] == 'Y'){
             SetConsoleTextAttribute(h, 14);     //setez culoarea galbena [...]
-            cout << guess_word[i], Sleep(100);
+            cout << guess_word[i], Sleep(60);
         }
         else{
             SetConsoleTextAttribute(h, 12);     //setez culoarea rosie   [...]
-            cout << guess_word[i], Sleep(100);
+            cout << guess_word[i], Sleep(60);
         }
     }
     SetConsoleTextAttribute(h, 7);              // setez culoarea default
@@ -54,21 +54,21 @@ void screen1(){
     cout << '\n';
     string str1 = "Introdu un cuvant: ";
     for(char c : str1){
-        cout << c, Sleep(100);
+        cout << c, Sleep(60);
     }
 }
 void screen2(){
     cout << '\n';
     string str2 = "Ai ghicit!";
     for(char c : str2){
-        cout << c, Sleep(100);
+        cout << c, Sleep(60);
     }
 }
 void screen3(){
     cout << '\n';
     string str3 = "Mai incearca: ";
     for(char c : str3){
-        cout << c, Sleep(100);
+        cout << c, Sleep(60);
     }
 }
 int main(){
