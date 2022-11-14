@@ -3,6 +3,7 @@ TASK-URI MIHAI:
 
 -Backtraking cu produs cartezian X (Mihai)
 
+-Update fisiere
 
 TASK-URI VLAD:
 
@@ -10,12 +11,18 @@ TASK-URI VLAD:
 
 -Initializare fisiere X (Vlad)
 
+-Input Wordle_Game
+
 
 TASK-URI COMUNE:
 
 -Calculare entropie cuvinte (Vlad si Mihai)
   -> 1. DESCHIDEM FISIER X (Vlad si Mihai)
   -> 2. CAUT CUVINTELE CARE RESPECTA REGULA DIN X SI SA LE NUMAR X (Vlad si Mihai)
-  -> 3. CALCULAM PROBABILITATEA = (NR CUV NUMARATE / NR CUV TOTAL)
-  -> 4. CALCULAM SI INFORMATIA = LOG2(1 / PROBABILITATE)
-  -> 5. SUMA DE PROBABILITATI (ENTROPIA) = SUM(PROBABILITATE * INFORMATIE)
+  -> 3. CALCULAM PROBABILITATEA = (NR CUV NUMARATE / NR CUV TOTAL) X (Vlad si Mihai)
+  -> 4. CALCULAM SI INFORMATIA = LOG2(1 / PROBABILITATE) X (Vlad si Mihai)
+  -> 5. SUMA DE PROBABILITATI (ENTROPIA) = SUM(PROBABILITATE * INFORMATIE) X (Vlad si Mihai)
+  
+ 
+  
+  

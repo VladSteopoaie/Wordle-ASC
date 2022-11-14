@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <cmath>
+#include <cstring>
 
 //Constante
 const int NR_CUV = 11454; //Numarul de cuvinte din fisier 
@@ -145,7 +146,21 @@ int main()
         printf("Gata: %d\n", i++);
     }
     
-
+    // std::ifstream fin("entropie_cuvinte.txt");
+    // char cuvMax[6] = "PENIS", cuv[6];
+    // double entropieMax = 5.24384f;
+    // while(fin >> cuv)
+    // {
+    //     double entropie = 0.0f;
+    //     fin >> entropie;
+    //     if(entropie > entropieMax){
+    //         entropieMax = entropie;
+    //         strcpy(cuvMax, cuv);
+    //         cuvMax[5] = '\0';
+    //     }
+        
+    // }
+    // std::cout << cuvMax << " " << entropieMax;
     return 0;
 }
 
