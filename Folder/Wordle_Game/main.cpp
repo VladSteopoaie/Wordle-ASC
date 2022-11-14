@@ -4,15 +4,15 @@
 #include <cstring>
 #include <stdlib.h>
 #include <time.h>
-#include <ctime>
-
+#include <string.h>
+#include <vector>
 
 using namespace std;
 
 ifstream f("../cuvinte_wordle.txt");
 
-bool in_menu=true,in_game=false,in_solver=false; //pentru a vedea in ce stadiu este jocul
-
+bool in_menu=true,in_game=false,in_solver=false,verif=false,ok=false; //pentru a vedea in ce stadiu este jocul
+char text[500];
 //pentru textul din meniu si instructiuni va fi folosita functia sleep, pentru a nu afisa un wall of text instant.
 //de adaugat lista de cuvinte prin citire de fisier
 
@@ -27,12 +27,12 @@ void word_getter(char cuv[])
         f>>cuv;
         n--;
     }
-    //cout<<cuv; //pentru a verifica faptul ca a ales un cuvant
+    cout<<cuv; //pentru a verifica faptul ca a ales un cuvant
 }
 
 
 void menu_text() //introducerea jocului
-{char text[500];
+{
     strcpy(text,"Salut, hai sa jucam jocul Wordle!");
     for (int i=0;i<strlen(text);i++)
         cout<<text[i],Sleep(30);
@@ -90,11 +90,56 @@ void menu_checker(char s[]) //verificarile inputurilor din meniu, daca vrem sa j
 }
 
 
+HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);    // pentru culori
+
+void word_verifier(string correct_word, string guess_word, bool &verif){
+    char state[6] = {'_', '_', '_', '_', '_'};        // starea fiecarei litere din cuvantul introdus
+    for(int i = 0; i < 5; ++i){
+        if(correct_word[i] == guess_word[i]){         // verific daca am litere care deja se potrivesc
+            state[i] = 'G';
+        }
+    }
+    for(int i = 0; i < 5; ++i){
+        bool ok = false;
+        if(state[i] == '_'){                   //daca litera nu se potriveste pe pozitie identica, o caut pe restul pozitiilor
+            for(int j = 0; j < 5; ++j){
+                if(correct_word[j] == guess_word[i]){   // daca la un moment dat gasesc o litera din cuvantul introdus in cel corect, dar nu pe aceeasi pozitie, o colorez in galben
+                    state[i] = 'Y';
+                    ok = true;
+                    break;
+                }
+            }
+            if(ok == false) state[i] = 'R';             // marchez cu rosu daca nu gasesc o litera din cuvantul introdus in celalalt
+        }
+    }
+    int cnt = 0;
+    for(int i = 0; i < 5; ++i){
+        if(state[i] == 'G'){
+            cnt ++;                             // numar cate pozitii din cuvinte au aceeasi litera
+            SetConsoleTextAttribute(h, 10);     //setez culoarea verde la afisare
+            cout << guess_word[i];
+        }
+        else if(state[i] == 'Y'){
+            SetConsoleTextAttribute(h, 14);     //setez culoarea galbena [...]
+            cout << guess_word[i];
+        }
+        else{
+            SetConsoleTextAttribute(h, 12);     //setez culoarea rosie   [...]
+            cout << guess_word[i];
+        }
+    }
+    SetConsoleTextAttribute(h, 7);              // setez culoarea default
+    if(cnt == 5){                              // verific daca toate literele se potrivesc
+        verif = true;
+    }
+}
+
+
 int main()
 {
     srand(time(NULL));
     menu_text();
-    char s[25],cuv[25]; //eventual va fi alocat dinamic. acest s e folosit PENTRU MENU INPUTS.
+    char s[25],cuv[25],guess[25]; //eventual va fi alocat dinamic. acest s e folosit PENTRU MENU INPUTS.
     while(in_menu)
     {
         cin.getline(s,25);
@@ -104,9 +149,24 @@ int main()
     }
     while(in_game) //aici va incepe jocul jucat de o persoana
     {
-        word_getter(cuv);
+        if (ok==false)
+            word_getter(cuv),cout<<'\n',ok=true;
+        strcpy(text,"Scrie un cuvant: ");
+        for (int i=0;i<strlen(text);i++)
+            cout<<text[i],Sleep(30);
+        cout<<'\n';
+        cin>>guess;
+        uppercase(guess);
+        word_verifier(cuv,guess,verif);
+        cout<<'\n';
      //de facut functiile pentru verificarea validitatii cuvantului si verificarea literelor
-        in_game=false;
+        if (verif==true)
+        {
+            strcpy(text,"Felicitari, ai gasi cuvantul!");
+            for (int i=0;i<strlen(text);i++)
+                cout<<text[i],Sleep(30);
+            in_game=false;
+        }
 
     }
     while(in_solver) //aici sa se desfasoare activitatea solverului(de modificat in urma sfatuirilor! :) )"
