@@ -1,12 +1,35 @@
 #include <iostream>
+#include <fstream>
 #include <windows.h>
 #include <cstring>
+#include <stdlib.h>
+#include <time.h>
+#include <ctime>
+
+
 using namespace std;
+
+ifstream f("../cuvinte_wordle.txt");
 
 bool in_menu=true,in_game=false,in_solver=false; //pentru a vedea in ce stadiu este jocul
 
-//pentru textul din meniu si instructiuni va fi folosita functia delay, pentru a nu afisa un wall of text instant.
+//pentru textul din meniu si instructiuni va fi folosita functia sleep, pentru a nu afisa un wall of text instant.
 //de adaugat lista de cuvinte prin citire de fisier
+
+void word_getter(char cuv[])
+{int n;
+    for (int i=1;i<=10;i++)
+    {
+        n=rand()%11451+1; //un for micut inainte ca sa genereze mai multe numere random si sa nu fie neaparat in ordine increasing
+    }
+    while(n)
+    {
+        f>>cuv;
+        n--;
+    }
+    //cout<<cuv; //pentru a verifica faptul ca a ales un cuvant
+}
+
 
 void menu_text() //introducerea jocului
 {char text[500];
@@ -40,7 +63,7 @@ void instructions() //cum se joca jocul. de modificat in functie de cum vor fi e
     //Sleep(1000)
     cout<<"3) Daca litera nu apartine deloc acelui cuvant, atunci culoarea ei ramane neschimbata"<<'\n';
     cout<<"Nota: jocul nu este case sensitive, asa ca literele mici vor fi tratate ca si cum ar fi litere mari"<<'\n';
-    cout<<"Exemplu de inputuri corecte: Sapte paine CRUCE fOaMe"<<'\n';
+    cout<<"Exemplu de inputuri corecte: Sapte, paine, CRUCE, fOaMe"<<'\n';
 
 }
 
@@ -69,21 +92,22 @@ void menu_checker(char s[]) //verificarile inputurilor din meniu, daca vrem sa j
 
 int main()
 {
-
+    srand(time(NULL));
     menu_text();
-    char s[25]; //eventual va fi alocat dinamic. acest s e folosit PENTRU MENU INPUTS.
+    char s[25],cuv[25]; //eventual va fi alocat dinamic. acest s e folosit PENTRU MENU INPUTS.
     while(in_menu)
     {
         cin.getline(s,25);
         uppercase(s);
-        //cout<<s<<'\n';
         menu_checker(s);
 
     }
     while(in_game) //aici va incepe jocul jucat de o persoana
     {
-        //de facut functiile pentru verificarea validitatii cuvantului si verificarea literelor
+        word_getter(cuv);
+     //de facut functiile pentru verificarea validitatii cuvantului si verificarea literelor
         in_game=false;
+
     }
     while(in_solver) //aici sa se desfasoare activitatea solverului(de modificat in urma sfatuirilor! :) )"
     {
