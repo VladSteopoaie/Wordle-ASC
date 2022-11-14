@@ -1,8 +1,9 @@
 #include <iostream>
 #include <fstream>
-#include <windows.h>
+#include <unistd.h>
 #include <cstring>
 #include <stdlib.h>
+#include <windows.h>
 #include <time.h>
 #include <string.h>
 #include <vector>
@@ -35,19 +36,19 @@ void menu_text() //introducerea jocului
 {
     strcpy(text,"Salut, hai sa jucam jocul Wordle!");
     for (int i=0;i<strlen(text);i++)
-        cout<<text[i],Sleep(30);
+        cout<<text[i],usleep(30000);
     cout<<'\n';
     strcpy(text,"Pentru a incepe jocul, scrie cuvantul 'Joaca'!");
     for (int i=0;i<strlen(text);i++)
-        cout<<text[i],Sleep(30);
+        cout<<text[i],usleep(30000);
     cout<<'\n';
     strcpy(text,"Daca vrei ca jocul sa se rezolve singur, scrie cuvantul 'Rezolva'!");
     for (int i=0;i<strlen(text);i++)
-        cout<<text[i],Sleep(30);
+        cout<<text[i],usleep(30000);
     cout<<'\n';
     strcpy(text,"In cazul in care nu stii cum se joaca acest joc, scrie 'Ajutor' si vor aparea instructiuni pe ecran!");
     for (int i=0;i<strlen(text);i++)
-        cout<<text[i],Sleep(30);
+        cout<<text[i],usleep(30000);
     cout<<'\n';
 
 }
@@ -153,7 +154,7 @@ int main()
             word_getter(cuv),cout<<'\n',ok=true;
         strcpy(text,"Scrie un cuvant: ");
         for (int i=0;i<strlen(text);i++)
-            cout<<text[i],Sleep(30);
+            cout<<text[i],usleep(30000);
         cout<<'\n';
         cin>>guess;
         uppercase(guess);
@@ -164,7 +165,7 @@ int main()
         {
             strcpy(text,"Felicitari, ai gasi cuvantul!");
             for (int i=0;i<strlen(text);i++)
-                cout<<text[i],Sleep(30);
+                cout<<text[i],usleep(30000);
             in_game=false;
         }
 
