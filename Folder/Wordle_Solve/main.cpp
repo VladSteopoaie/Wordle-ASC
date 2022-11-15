@@ -133,34 +133,39 @@ int main()
     InitFiles();
 
     // Deschidem fisierul si vrem sa calculam entropia pentru toate cuvintele din fisier
-    std::ifstream f1("cuvinte1.txt");
-    std::ofstream f2("entropie_cuvinte.txt");
+    std::fstream f1("cuvinte1.txt", std::ios::in | std::ios::out);
+    std::fstream f2("cuvinte2.txt", std::ios::in | std::ios::out);
     char cuv[6];
     int i = 1;
-    while(f1 >> cuv)
-    {
-        int x[5] = {0, 0, 0, 0, 0};
-        double entropie = 0.0f;
-        Back(0, x, cuv, entropie);
-        f2 << cuv << " " << entropie << '\n';
-        printf("Gata: %d\n", i++);
-    }
-    
-    // std::ifstream fin("entropie_cuvinte.txt");
-    // char cuvMax[6] = "PENIS", cuv[6];
-    // double entropieMax = 5.24384f;
-    // while(fin >> cuv)
+    // while(f1 >> cuv)
     // {
+    //     int x[5] = {0, 0, 0, 0, 0};
     //     double entropie = 0.0f;
-    //     fin >> entropie;
-    //     if(entropie > entropieMax){
-    //         entropieMax = entropie;
-    //         strcpy(cuvMax, cuv);
-    //         cuvMax[5] = '\0';
-    //     }
-        
+    //     Back(0, x, cuv, entropie);
+    //     f2 << cuv << " " << entropie << '\n';
+    //     printf("Gata: %d\n", i++);
     // }
-    // std::cout << cuvMax << " " << entropieMax;
+    
+    char cuv_MAX[6]="TAREI";
+    int x[5]={0,1,0,0,1};
+    while(f1>>cuv)
+    {
+        if(VerificareReg(x,cuv_MAX,cuv))
+        {
+            f2<<cuv<<"\n";
+        }
+    }
+    f1.close();
+    f2.close();
+    f2.open("cuvinte2.txt");
+    f1.open("cuvinte1.txt",std::ios::out |std::ios::trunc);
+    while(f2>>cuv)
+    {
+        f1<<cuv<<"\n";
+    }
+    f1.close();
+    f2.close();
+    f2.open("cuvinte2.txt", std::ios::out | std::ios::trunc);
     return 0;
 }
 
