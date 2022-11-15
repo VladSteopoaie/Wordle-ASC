@@ -129,8 +129,36 @@ void Back(int k, int *x, char *cuv, double &entropie)
 int main()
 {
 
+
+    
+    //Intre cele doua lini va fi unit programul final
+    /////////////////////////////////////////////////////////////
+
     // Initializam fisierele inainte sa inceapa programul
     InitFiles();
+
+    // Poate niste citiri inainte... daca nu dam direct primul guess "TAREI"
+
+    // Cat timp nu am ghicit cuvantul
+
+        // Citim ce rezultat obtinem 
+
+        // Verificam si pastram doar cuvintele care respecta regula
+
+        // Actualizam entropia fiacarui cuvant
+
+        // Dam ca si urmator guess cuvantul cu entropia cea mai mare
+
+    // Afisam cuvantul ghicit
+
+    //OBSERVATII
+        // trebuie sa tinem minte numarul de guess-uri
+        // trebuie sa tinem minte toate guess-urile pana la cuvantul ghicit
+
+    /////////////////////////////////////////////////////////////
+
+
+
 
     // Deschidem fisierul si vrem sa calculam entropia pentru toate cuvintele din fisier
     std::fstream f1("cuvinte1.txt", std::ios::in | std::ios::out);
@@ -147,7 +175,7 @@ int main()
     // }
     
     char cuv_MAX[6]="TAREI";
-    int x[5]={0,1,0,0,1};
+    int x[5]={2,2,2,2,2};
     while(f1>>cuv)
     {
         if(VerificareReg(x,cuv_MAX,cuv))
