@@ -2,6 +2,11 @@
 #include <fstream>
 #include <cmath>
 #include <cstring>
+#include <unistd.h>
+#include <sys/types.h>
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <stdio.h>
 
 //Constante
 const int NR_CUV = 11454; //Numarul de cuvinte din fisier 
@@ -13,8 +18,11 @@ const int NR_LITERE =  NR_CUV * LG_CUV; //Numarul de litere din fisier
 
 
 //Initializeaza fisierele text
-void InitFiles()
+int InitFiles()
 {
+    //Creeaza fisierul pentru IPC
+    if(mkfifo("guess", 0777) != 0) return -1;
+
     std::ifstream f_original("../cuvinte_wordle.txt");
     //Deschide fisierele pentru a le sterege continutul
     std::ofstream f1("cuvinte1.txt");
@@ -30,6 +38,7 @@ void InitFiles()
     f_original.close();
     f1.close();
     f2.close();
+    return 0;
 }
 
 
@@ -73,7 +82,7 @@ bool VerificareReg(int *reg, char *cuv_baza, char *cuv_curent)
     return ok;
 }
 
-//Backtraking
+//Backtraking (produs cartezian)
 void Back(int k, int *x, char *cuv, double &entropie)
 {
     //Conventie: 
@@ -123,6 +132,18 @@ void Back(int k, int *x, char *cuv, double &entropie)
     }
 }
 
+//Functie care citeste din fifo
+void Read(int *v)
+{
+
+}
+
+//Functie care scrie in fifo
+void Write(char *c)
+{
+
+}
+
 
 ///MAIN///
 
@@ -135,19 +156,27 @@ int main()
     /////////////////////////////////////////////////////////////
 
     // Initializam fisierele inainte sa inceapa programul
-    InitFiles();
+    if(InitFiles() != 0)
+    {
+        std::cout << "A aparut o eroare la fisiere!";
+        return -1;
+    }
 
     // Poate niste citiri inainte... daca nu dam direct primul guess "TAREI"
+    bool ghicit = false;
 
     // Cat timp nu am ghicit cuvantul
-
+    while(ghicit == false)
+    {
+        int rezultat[5];
         // Citim ce rezultat obtinem 
-
+        Read(rezultat);
         // Verificam si pastram doar cuvintele care respecta regula
 
         // Actualizam entropia fiacarui cuvant
 
         // Dam ca si urmator guess cuvantul cu entropia cea mai mare
+    }
 
     // Afisam cuvantul ghicit
 
