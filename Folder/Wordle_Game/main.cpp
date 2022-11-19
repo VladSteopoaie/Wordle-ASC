@@ -28,7 +28,7 @@ void word_getter(char cuv[])
         f>>cuv;
         n--;
     }
-    cout<<cuv; //pentru a verifica faptul ca a ales un cuvant
+    //cout<<cuv; ///pentru a verifica faptul ca a ales un cuvant
 }
 
 
@@ -86,7 +86,6 @@ void instructions() //cum se joca jocul. de modificat in functie de cum vor fi e
     strcpy(text,"Exemplu de inputuri corecte: Sapte, paine, CRUCE, fOaMe");
     for (int i=0;i<strlen(text);i++)
         cout<<text[i],usleep(30000);
-    cout<<'\n';
     cout<<'\n';
 
 }
@@ -166,6 +165,7 @@ int contor=0;
     menu_text();
     while(in_menu)
     {
+        cout<<'\n';
         strcpy(text,"Ce vrei sa faci? Scrie aici: ");
         for (int i=0;i<strlen(text);i++)
             cout<<text[i],usleep(30000);
@@ -192,33 +192,56 @@ int contor=0;
             cout<<text[i],usleep(30000);
         cin>>guess;
         uppercase(guess);
-
-             /// functia pentru verificarea validitatii cuvantului aici
-        contor++;
-        word_verifier(cuv,guess,verif); //verifica apartenenta literelor prin functia word_getter. bineinteles si guess-ul va fi case insensitive
-        cout<<'\n';
-        if (verif==true) //daca a gasit cuvantul potrivit
+        ///aici incepe codul pentru verificarea validitatii cuvantului
+        if (strlen(guess)!=5)
         {
-            ok_guess=true;
-            strcpy(text,"Felicitari, ai gasi cuvantul!");
+            strcpy(text,"Cuvantul trebuie sa fie format din 5 litere!");
             for (int i=0;i<strlen(text);i++)
                 cout<<text[i],usleep(30000);
             cout<<'\n';
-            strcpy(text,"Vrei sa mai joci o data? DA/NU");
-            for (int i=0;i<strlen(text);i++)
-                cout<<text[i],usleep(30000);
+        }
+        else if (strlen(guess)==5)
+        {
+            for (int i=0;i<5;i++)
+                if (!(guess[i]>='A' && guess[i]<='Z'))
+                {
+                    strcpy(text,"Cuvantul trebuie sa contina doar litere!");
+                    for (int i=0;i<strlen(text);i++)
+                        cout<<text[i],usleep(30000);
+                    break;
+                }
             cout<<'\n';
-            while (ok_guess) //aici va verifica daca userul mai vrea sa joace din nou sau nu
+        }
+        ///sfarsit, mai jos incepe verificarea literelor
+        else
+        {
+            contor++;
+            word_verifier(cuv,guess,verif); //verifica apartenenta literelor prin functia word_getter. bineinteles si guess-ul va fi case insensitive
+            cout<<'\n';
+            if (verif==true) //daca a gasit cuvantul potrivit
             {
-                cin>>guess;
-                uppercase(guess);
-                if (strcmp(guess,"NU")==0) //daca jucatorul scrie NU
-                    in_game=false,ok_guess=false;
-                else if (strcmp(guess,"DA")==0) //daca jucatorul scrie DA
-                    in_game=true,ok_guess=false,ok=false,verif=false,contor=0; //resetarea valorilor pentru ca jocul sa o ia de la capat
-                else //in caz ca scrie altceva
-                    cout<<"Te rog, scrie DA/NU!"<<'\n';
+                ok_guess=true;
+                strcpy(text,"Felicitari, ai gasi cuvantul!");
+                for (int i=0;i<strlen(text);i++)
+                    cout<<text[i],usleep(30000);
+                cout<<'\n';
+                strcpy(text,"Vrei sa mai joci o data? DA/NU");
+                for (int i=0;i<strlen(text);i++)
+                    cout<<text[i],usleep(30000);
+                cout<<'\n';
+                while (ok_guess) //aici va verifica daca userul mai vrea sa joace din nou sau nu
+                {
+                    cin>>guess;
+                    uppercase(guess);
+                    if (strcmp(guess,"NU")==0) //daca jucatorul scrie NU
+                        in_game=false,ok_guess=false;
+                    else if (strcmp(guess,"DA")==0) //daca jucatorul scrie DA
+                        in_game=true,ok_guess=false,ok=false,verif=false,contor=0; //resetarea valorilor pentru ca jocul sa o ia de la capat
+                    else //in caz ca scrie altceva
+                        cout<<"Te rog, scrie DA/NU!"<<'\n';
+                }
             }
+
         }
     }
 
