@@ -2,8 +2,7 @@
 #include <fstream>
 #include <unistd.h>
 #include <cstring>
-#include <stdlib.h>
-#include <windows.h>
+#include <stdlib.h>#include <windows.h>
 #include <time.h>
 #include <string.h>
 #include <vector>
