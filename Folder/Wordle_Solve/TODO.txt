@@ -3,7 +3,11 @@ TASK-URI MIHAI:
 
 -Backtraking cu produs cartezian X (Mihai)
 
--Update fisiere
+-Update fisiere X (Mihai)
+
+-Read si Write in game cu functiii!!!!
+
+-State sa nu fie global
 
 TASK-URI VLAD:
 
@@ -11,7 +15,9 @@ TASK-URI VLAD:
 
 -Initializare fisiere X (Vlad)
 
--Input Wordle_Game
+-Input Wordle_Game X (Vlad)
+
+
 
 
 TASK-URI COMUNE:
@@ -23,6 +29,11 @@ TASK-URI COMUNE:
   -> 4. CALCULAM SI INFORMATIA = LOG2(1 / PROBABILITATE) X (Vlad si Mihai)
   -> 5. SUMA DE PROBABILITATI (ENTROPIA) = SUM(PROBABILITATE * INFORMATIE) X (Vlad si Mihai)
   
- 
-  
+-apelare solver din game
+-"rm guess" automat in solver
+
+-simulare:
+  -pt toate CUVINTELE
+  -nr de incercari
+  -procesul de ghicire
   
