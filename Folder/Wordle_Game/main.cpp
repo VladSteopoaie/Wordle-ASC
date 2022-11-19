@@ -3,16 +3,18 @@
 #include <unistd.h>
 #include <cstring>
 #include <stdlib.h>
-#include <windows.h>
+//#include <windows.h>
 #include <time.h>
-#include <string.h>
-#include <vector>
+#include <sys/types.h>
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <stdio.h>
 
 using namespace std;
 
 ifstream f("../cuvinte_wordle.txt");
 
-bool in_menu=true,in_game=false,in_solver=false,verif=false,ok=false,ok_guess=true; //pentru a vedea in ce stadiu este jocul
+bool in_menu=true,in_game=false,in_solver=false,verif=false,ok=false,ok_guess=true,ok_num=false; //pentru a vedea in ce stadiu este jocul
 char text[500];
 //pentru textul din meniu si instructiuni va fi folosita functia sleep, pentru a nu afisa un wall of text instant.
 //de adaugat lista de cuvinte prin citire de fisier
@@ -113,7 +115,7 @@ void menu_checker(char s[]) //verificarile inputurilor din meniu, daca vrem sa j
 }
 
 
-HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);    // pentru culori
+//HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);    // pentru culori
 
 void word_verifier(string correct_word, string guess_word, bool &verif){
     char state[6] = {'_', '_', '_', '_', '_'};        // starea fiecarei litere din cuvantul introdus
@@ -136,7 +138,7 @@ void word_verifier(string correct_word, string guess_word, bool &verif){
         }
     }
     int cnt = 0;
-    for(int i = 0; i < 5; ++i){
+    /*for(int i = 0; i < 5; ++i){
         if(state[i] == 'G'){
             cnt ++;                             // numar cate pozitii din cuvinte au aceeasi litera
             SetConsoleTextAttribute(h, 10);     //setez culoarea verde la afisare
@@ -154,7 +156,10 @@ void word_verifier(string correct_word, string guess_word, bool &verif){
     SetConsoleTextAttribute(h, 7);              // setez culoarea default
     if(cnt == 5){                              // verific daca toate literele se potrivesc
         verif = true;
-    }
+    }*/
+    for (int i=0;i<5;i++)
+        cout<<state[i]<<' ';
+    cout<<'\n';
 }
 
 
@@ -199,22 +204,26 @@ int contor=0;
             for (int i=0;i<strlen(text);i++)
                 cout<<text[i],usleep(30000);
             cout<<'\n';
+            continue;
         }
-        else if (strlen(guess)==5)
-        {
-            for (int i=0;i<5;i++)
+
+        for (int i=0;i<5;i++)
                 if (!(guess[i]>='A' && guess[i]<='Z'))
                 {
                     strcpy(text,"Cuvantul trebuie sa contina doar litere!");
                     for (int i=0;i<strlen(text);i++)
                         cout<<text[i],usleep(30000);
+                    cout<<'\n';
+                    ok_num=true;
                     break;
                 }
-            cout<<'\n';
-        }
+        if (ok_num==true)
+            {
+                ok_num=false;
+                continue;
+            }
+
         ///sfarsit, mai jos incepe verificarea literelor
-        else
-        {
             contor++;
             word_verifier(cuv,guess,verif); //verifica apartenenta literelor prin functia word_getter. bineinteles si guess-ul va fi case insensitive
             cout<<'\n';
@@ -242,7 +251,6 @@ int contor=0;
                 }
             }
 
-        }
     }
 
     while(in_solver) //aici sa se desfasoare activitatea solverului(de modificat in urma sfatuirilor! :) )"
