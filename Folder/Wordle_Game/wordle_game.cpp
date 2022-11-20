@@ -55,6 +55,13 @@ void screen3(){
         cout << c;
     }
 }
+int list_verifier(string word, vector < string> lines, int n){
+    for(int i = 0; i < n; ++i){
+        if(word == lines[i])
+            return 1;
+    }
+    return 0;
+}
 int main(){
     
     string word = "soare";
