@@ -1,14 +1,11 @@
 #include <iostream>
 #include <string.h>
 #include <vector>
-#include <windows.h>
+ 
 #include <fstream>
 using namespace std;
-
-ifstream f("../cuvinte_wordle.txt");
-
-HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);    // pentru culori
-
+ 
+ 
 void word_verifier(string correct_word, string guess_word, bool &verif){
     char state[6] = {'_', '_', '_', '_', '_'};        // starea fiecarei litere din cuvantul introdus
     for(int i = 0; i < 5; ++i){
@@ -31,21 +28,8 @@ void word_verifier(string correct_word, string guess_word, bool &verif){
     }
     int cnt = 0;
     for(int i = 0; i < 5; ++i){
-        if(state[i] == 'G'){
-            cnt ++;                             // numar cate pozitii din cuvinte au aceeasi litera
-            SetConsoleTextAttribute(h, 10);     //setez culoarea verde la afisare
-            cout << guess_word[i], Sleep(60);
-        }
-        else if(state[i] == 'Y'){
-            SetConsoleTextAttribute(h, 14);     //setez culoarea galbena [...]
-            cout << guess_word[i], Sleep(60);
-        }
-        else{
-            SetConsoleTextAttribute(h, 12);     //setez culoarea rosie   [...]
-            cout << guess_word[i], Sleep(60);
-        }
+        cout << state[i];
     }
-    SetConsoleTextAttribute(h, 7);              // setez culoarea default
     if(cnt == 5){                              // verific daca toate literele se potrivesc
         verif = true;
     }
@@ -54,26 +38,26 @@ void screen1(){
     cout << '\n';
     string str1 = "Introdu un cuvant: ";
     for(char c : str1){
-        cout << c, Sleep(60);
+        cout << c;
     }
 }
 void screen2(){
     cout << '\n';
     string str2 = "Ai ghicit!";
     for(char c : str2){
-        cout << c, Sleep(60);
+        cout << c;
     }
 }
 void screen3(){
     cout << '\n';
     string str3 = "Mai incearca: ";
     for(char c : str3){
-        cout << c, Sleep(60);
+        cout << c;
     }
 }
 int main(){
     
-    string word = "trist";
+    string word = "soare";
     string ex;
     bool solved = false;
     screen1();
