@@ -30,7 +30,7 @@ TASK-URI COMUNE:
   -> 5. SUMA DE PROBABILITATI (ENTROPIA) = SUM(PROBABILITATE * INFORMATIE) X (Vlad si Mihai)
   
 -apelare solver din game
--"rm guess" automat in solver
+-"rm guess" automat in solver X (Vlad)
 
 -simulare:
   -pt toate CUVINTELE
