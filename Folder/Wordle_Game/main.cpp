@@ -3,34 +3,46 @@
 #include <unistd.h>
 #include <cstring>
 #include <stdlib.h>
-//#include <windows.h>
 #include <time.h>
 #include <sys/types.h>
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <stdio.h>
+#include <vector>
+#include <string.h>
 
 using namespace std;
 
 ifstream f("../cuvinte_wordle.txt");
 
 bool in_menu=true,in_game=false,in_solver=false,verif=false,ok=false,ok_guess=true,ok_num=false; //pentru a vedea in ce stadiu este jocul
-char text[500];
+char text[500],state[6],dictionar[11455][5];
+
 //pentru textul din meniu si instructiuni va fi folosita functia sleep, pentru a nu afisa un wall of text instant.
 //de adaugat lista de cuvinte prin citire de fisier
+
+/*void init_dictionar(char cuv[])
+{
+    int ct=0;
+    while (f>>cuv)
+    {
+        ct++;
+        strcpy(dictionar[i],)
+    }
+}*/
 
 void word_getter(char cuv[])
 {int n;
     for (int i=1;i<=10;i++)
     {
-        n=rand()%11451+1; //un for micut inainte ca sa genereze mai multe numere random si sa nu fie neaparat in ordine increasing
+        n=rand()%11454+1; //un for micut inainte ca sa genereze mai multe numere random si sa nu fie neaparat in ordine increasing
     }
     while(n)
     {
         f>>cuv;
         n--;
     }
-    //cout<<cuv; ///pentru a verifica faptul ca a ales un cuvant
+    cout<<cuv; ///pentru a verifica faptul ca a ales un cuvant
 }
 
 
@@ -114,16 +126,25 @@ void menu_checker(char s[]) //verificarile inputurilor din meniu, daca vrem sa j
 
 }
 
+int list_verifier(string word, vector < string> lines, int n){
+    for(int i = 0; i < n; ++i){
+        if(word == lines[i])
+            return 1;
+    }
+    return 0;
+}
+
 
 //HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);    // pentru culori
 
 void word_verifier(string correct_word, string guess_word, bool &verif){
-    char state[6] = {'_', '_', '_', '_', '_'};        // starea fiecarei litere din cuvantul introdus
-    for(int i = 0; i < 5; ++i){
-        if(correct_word[i] == guess_word[i]){         // verific daca am litere care deja se potrivesc
+    for(int i = 0; i < 5; ++i)
+        if(correct_word[i] == guess_word[i])         // verific daca am litere care deja se potrivesc
             state[i] = 'G';
-        }
-    }
+        else
+            state[i] = '_';
+
+
     for(int i = 0; i < 5; ++i){
         bool ok = false;
         if(state[i] == '_'){                   //daca litera nu se potriveste pe pozitie identica, o caut pe restul pozitiilor
@@ -138,28 +159,12 @@ void word_verifier(string correct_word, string guess_word, bool &verif){
         }
     }
     int cnt = 0;
-    /*for(int i = 0; i < 5; ++i){
-        if(state[i] == 'G'){
-            cnt ++;                             // numar cate pozitii din cuvinte au aceeasi litera
-            SetConsoleTextAttribute(h, 10);     //setez culoarea verde la afisare
-            cout << guess_word[i];
-        }
-        else if(state[i] == 'Y'){
-            SetConsoleTextAttribute(h, 14);     //setez culoarea galbena [...]
-            cout << guess_word[i];
-        }
-        else{
-            SetConsoleTextAttribute(h, 12);     //setez culoarea rosie   [...]
-            cout << guess_word[i];
-        }
-    }
-    SetConsoleTextAttribute(h, 7);              // setez culoarea default
-    if(cnt == 5){                              // verific daca toate literele se potrivesc
-        verif = true;
-    }*/
     for (int i=0;i<5;i++)
         cout<<state[i]<<' ';
     cout<<'\n';
+     if(cnt == 5){                              // verific daca toate literele se potrivesc
+        verif = true;
+    }
 }
 
 
