@@ -16,32 +16,31 @@ using namespace std;
 ifstream f("../cuvinte_wordle.txt");
 
 bool in_menu=true,in_game=false,in_solver=false,verif=false,ok=false,ok_guess=true,ok_num=false; //pentru a vedea in ce stadiu este jocul
-char text[500],state[6],dictionar[11455][5];
+char text[500],state[6];
+vector <string> dictionar;
+string line;
 
-//pentru textul din meniu si instructiuni va fi folosita functia sleep, pentru a nu afisa un wall of text instant.
+//pentru textul din meniu si instructiuni va fi folosita functia usleep, pentru a nu afisa un wall of text instant.
 //de adaugat lista de cuvinte prin citire de fisier
 
-/*void init_dictionar(char cuv[])
+void init_dictionar()
 {
-    int ct=0;
-    while (f>>cuv)
-    {
-        ct++;
-        strcpy(dictionar[i],)
+    int total_lines = 0;
+    while(getline(f, line)){
+        dictionar.push_back(line);
+        total_lines++;
     }
-}*/
+
+}
 
 void word_getter(char cuv[])
 {int n;
     for (int i=1;i<=10;i++)
     {
-        n=rand()%11454+1; //un for micut inainte ca sa genereze mai multe numere random si sa nu fie neaparat in ordine increasing
+        n=rand()%11453; //un for micut inainte ca sa genereze mai multe numere random si sa nu fie neaparat in ordine increasing
     }
-    while(n)
-    {
-        f>>cuv;
-        n--;
-    }
+    for (int i=0;i<5;i++)
+        cuv[i]=dictionar[n][i];
     cout<<cuv; ///pentru a verifica faptul ca a ales un cuvant
 }
 
@@ -67,7 +66,7 @@ void menu_text() //introducerea jocului
 
 }
 
-void instructions() //cum se joca jocul. de modificat in functie de cum vor fi evidentiate literele corecte in joc
+void instructions() //cum se joca jocul.
 {
     strcpy(text,"In acest joc, scopul este simplu: Incearca sa ghicesti un cuvant de 5 litere! ");
     for (int i=0;i<strlen(text);i++)
@@ -77,11 +76,11 @@ void instructions() //cum se joca jocul. de modificat in functie de cum vor fi e
     for (int i=0;i<strlen(text);i++)
         cout<<text[i],usleep(30000);
     cout<<'\n';
-    strcpy(text,"De fiecare data cand introduci un cuvant, ti se vor da urmatoarele informatii:");
+    strcpy(text,"De fiecare data cand introduci un cuvant din Dictionar, vei vedea ca sub el vor aparea aceste literele R,Y,G");
     for (int i=0;i<strlen(text);i++)
         cout<<text[i],usleep(30000);
     cout<<'\n';
-    strcpy(text,"1) Daca o litera din cuvantul introdus de tine se afla in cuvantul care trebuie ghicit, aceasta va fi evidentiata cu galben");
+    strcpy(text,"1) Daca o litera din cuvantul introdus de tine se afla in cuvantul care trebuie ghicit, aceasta ");
     for (int i=0;i<strlen(text);i++)
         cout<<text[i],usleep(30000);
     cout<<'\n';
@@ -126,21 +125,20 @@ void menu_checker(char s[]) //verificarile inputurilor din meniu, daca vrem sa j
 
 }
 
-int list_verifier(string word, vector < string> lines, int n){
-    for(int i = 0; i < n; ++i){
-        if(word == lines[i])
+int list_verifier(string word){
+    for(int i = 0; i < 11453; ++i){
+        if(word == dictionar[i])
             return 1;
     }
     return 0;
 }
 
 
-//HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);    // pentru culori
-
 void word_verifier(string correct_word, string guess_word, bool &verif){
+    int cnt = 0;
     for(int i = 0; i < 5; ++i)
         if(correct_word[i] == guess_word[i])         // verific daca am litere care deja se potrivesc
-            state[i] = 'G';
+            state[i] = 'G',cnt++;
         else
             state[i] = '_';
 
@@ -158,9 +156,8 @@ void word_verifier(string correct_word, string guess_word, bool &verif){
             if(ok == false) state[i] = 'R';             // marchez cu rosu daca nu gasesc o litera din cuvantul introdus in celalalt
         }
     }
-    int cnt = 0;
     for (int i=0;i<5;i++)
-        cout<<state[i]<<' ';
+        cout<<state[i]<<' ';                    //
     cout<<'\n';
      if(cnt == 5){                              // verific daca toate literele se potrivesc
         verif = true;
@@ -169,9 +166,10 @@ void word_verifier(string correct_word, string guess_word, bool &verif){
 
 
 int main()
-{char s[25],cuv[25],guess[25];  //acest s e folosit PENTRU MENU INPUTS.
+{char s[60],guess[25],cuv[25]; //acest s e folosit PENTRU MENU INPUTS.
 int contor=0;
     srand(time(NULL));
+    init_dictionar();
     menu_text();
     while(in_menu)
     {
@@ -208,7 +206,7 @@ int contor=0;
             strcpy(text,"Cuvantul trebuie sa fie format din 5 litere!");
             for (int i=0;i<strlen(text);i++)
                 cout<<text[i],usleep(30000);
-            cout<<'\n';
+            cout<<'\n'<<'\n';
             continue;
         }
 
@@ -218,7 +216,7 @@ int contor=0;
                     strcpy(text,"Cuvantul trebuie sa contina doar litere!");
                     for (int i=0;i<strlen(text);i++)
                         cout<<text[i],usleep(30000);
-                    cout<<'\n';
+                    cout<<'\n'<<'\n';
                     ok_num=true;
                     break;
                 }
@@ -227,10 +225,19 @@ int contor=0;
                 ok_num=false;
                 continue;
             }
+        if (list_verifier(guess)==0)
+        {
+            strcpy(text,"Cuvantul trebuie sa apartina Dictionarului Limbii Romane!");
+            for (int i=0;i<strlen(text);i++)
+                cout<<text[i],usleep(30000);
+            cout<<'\n'<<'\n';
+            continue;
+        }
+
 
         ///sfarsit, mai jos incepe verificarea literelor
             contor++;
-            word_verifier(cuv,guess,verif); //verifica apartenenta literelor prin functia word_getter. bineinteles si guess-ul va fi case insensitive
+            word_verifier(cuv,guess,verif); //verifica apartenenta literelor prin functia word_verifier. bineinteles si guess-ul va fi case insensitive
             cout<<'\n';
             if (verif==true) //daca a gasit cuvantul potrivit
             {
@@ -261,6 +268,7 @@ int contor=0;
     while(in_solver) //aici sa se desfasoare activitatea solverului(de modificat in urma sfatuirilor! :) )"
     {
         cout<<"De implementat"<<'\n';
+        in_solver=false;
     }
     strcpy(text,"Joc terminat!");
     for (int i=0;i<strlen(text);i++)
