@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string.h>
 #include <vector>
- 
+#include <unistd.h>
 #include <fstream>
 using namespace std;
  
@@ -38,21 +38,21 @@ void screen1(){
     cout << '\n';
     string str1 = "Introdu un cuvant: ";
     for(char c : str1){
-        cout << c;
+        cout << c, usleep(30000);
     }
 }
 void screen2(){
     cout << '\n';
     string str2 = "Ai ghicit!";
     for(char c : str2){
-        cout << c;
+        cout << c, usleep(30000);
     }
 }
 void screen3(){
     cout << '\n';
     string str3 = "Mai incearca: ";
     for(char c : str3){
-        cout << c;
+        cout << c, usleep(30000);
     }
 }
 int list_verifier(string word, vector < string> lines, int n){
