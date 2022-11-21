@@ -7,7 +7,7 @@ TASK-URI MIHAI:
 
 -Read si Write in game cu functiii!!!!
 
--State sa nu fie global
+-State sa nu fie global -----
 
 TASK-URI VLAD:
 

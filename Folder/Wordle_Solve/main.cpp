@@ -230,7 +230,6 @@ int main()
         return -1;
     }
     
-    
     // Cat timp nu am ghicit cuvantul
     while(ghicit == false)
     {
@@ -317,6 +316,7 @@ int main()
         // trebuie sa tinem minte numarul de guess-uri
         // trebuie sa tinem minte toate guess-urile pana la cuvantul ghicit
 
+    remove("guess");
     /////////////////////////////////////////////////////////////
 
   

@@ -37,6 +37,7 @@ int main()
 
         char v[6];
         std::cin.getline(v, 6);
+        strcpy(v, "GGGGG");
         bool ghicit = true;
         
         if(write(fdw, v, sizeof(char) * 5) == -1)
