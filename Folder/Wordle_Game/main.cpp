@@ -15,14 +15,13 @@ using namespace std;
 
 ifstream f("../cuvinte_wordle.txt");
 
-bool in_menu=true,in_game=false,in_solver=false,verif=false,ok=false,ok_guess=true,ok_num=false; //pentru a vedea in ce stadiu este jocul
+bool in_menu=true,in_game=false,in_solver=false,verif=false,ok=false,ok_guess=true,ok_num=false; ///pentru a vedea in ce stadiu este jocul
 char state[6];
 int contor;
 vector <string> dictionar;
 string line;
 
-//pentru textul din meniu si instructiuni va fi folosita functia usleep, pentru a nu afisa un wall of text instant.
-//de adaugat lista de cuvinte prin citire de fisier
+///pentru textul din meniu si instructiuni va fi folosita functia usleep, pentru a nu afisa un wall of text instant.
 
 void init_dictionar()
 {
@@ -298,16 +297,59 @@ int main()
         uppercase(guess);
         if(!check_validity(guess))         ///daca nu este valid cuvantul(nu e format din 5 caractere, doar litere sau nu apartine Dictionarului Limbii Romane)
             continue;
-            contor++; ///daca este valid, inseamna ca s-a produs o incercare buna si se tine minte
-            word_verifier(cuv,guess,verif); ///verifica apartenenta literelor prin functia word_verifier. bineinteles si guess-ul va fi case insensitive
-            if (verif==true) ///daca a gasit cuvantul potrivit
-                word_guessed_text();
+        contor++; ///daca este valid, inseamna ca s-a produs o incercare buna si se tine minte
+        word_verifier(cuv,guess,verif); ///verifica apartenenta literelor prin functia word_verifier. bineinteles si guess-ul va fi case insensitive
+        if (verif==true) ///daca a gasit cuvantul potrivit
+            word_guessed_text();
     }
 
     while(in_solver) //aici sa se desfasoare activitatea solverului(de modificat in urma sfatuirilor! :) )"
     {
-        cout<<"De implementat"<<'\n';
-        in_solver=false;
+        if (ok == false)
+        {
+            word_getter(cuv);
+            cout << '\n';
+            ok = true;
+        }
+        int fdr = open("guess", O_RDONLY);
+        if (fdr == -1)
+        {
+            printf("Eroare la deschiderea fdr!");
+            return -1;
+        }
+        char c[6];
+        if (read(fdr, c, sizeof(char) * 5) == -1)
+        {
+            printf("Eroare la read!");
+            return -1;
+        }
+        close(fdr);
+        for (int i = 0; i < 5; ++i)
+        {
+            cout << c[i];
+        }
+        cout << "\n";
+        contor++;
+        word_verifier(cuv, c, verif);
+        cout << "\n\n";
+        int fdw = open("guess", O_WRONLY);
+        if (fdw == -1)
+        {
+            printf("Eroare la deschiderea fdw!");
+            perror("Sal");
+            return -1;
+        }
+        if (write(fdw, state, sizeof(char) * 5) == -1)
+        {
+            printf("Eroare la write!");
+            return -1;
+        }
+        close(fdw);
+        if (verif)
+        {
+            printf("Ai gasit cuvantul in %d incercari\n", contor);
+            break;
+        }
     }
     game_over();
     return 0;
