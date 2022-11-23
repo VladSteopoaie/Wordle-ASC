@@ -208,8 +208,6 @@ int Write(std::string str)
 
 int main()
 {
-
-    
     
     //Intre cele doua lini va fi unit programul final
     /////////////////////////////////////////////////////////////
@@ -268,9 +266,8 @@ int main()
             }
             
         }
-
-        if (nr_cuv == 1) //Daca ne-a mai ramas un cuvant in lista atunci el este guess-ul nostru
-            guess = cuv;
+        
+        
 
         f1_in.close();
         f2_out.close();
@@ -278,7 +275,7 @@ int main()
         //Deschidem fisiere pentru a copia continutul din F2 in F1
         std::ifstream f2_in(F2);
         std::ofstream f1_out(F1);
-
+        
         while(f2_in >> cuv)
         {
             f1_out << cuv << "\n";
@@ -293,6 +290,12 @@ int main()
         // Actualizam entropia fiacarui cuvant
 
         f1_in.open(F1);
+
+
+        if (nr_cuv == 1){ //Daca ne-a mai ramas un cuvant in lista atunci el este guess-ul nostru
+            f1_in >> cuv;
+            guess = cuv;
+        }
 
         double entropie_max = 0.0f;
         while(f1_in >> cuv && nr_cuv != 1) //cuv l-am declarat mai sus
