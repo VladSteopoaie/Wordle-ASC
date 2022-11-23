@@ -4,14 +4,12 @@ Un mic meniu in consola, cu introducere si instructiuni pentru wordle(edi, gata)
 ===========================================================================================================================================
 Punerea fisierului de cuvinte wordle pentru alegerea unui cuvant random(edi, gata)
 ===========================================================================================================================================
-Contor pentru numar de incercari, eventual si un personal best(edi)
+Contor pentru numar de incercari(edi,gata)
 ===========================================================================================================================================
-Verificarea validitatii cuvantului(razvan)
+Verificarea validitatii cuvantului(razvan,gata)
 ===========================================================================================================================================
 Evidentierea apartenentei literelor+pozitiilor bune sau nu(razvan, gata)
 ===========================================================================================================================================
-Afisarea literelor cu culori(razvan, gata)
+Vector care sa retina informatii despre litere(razvan, gata)
 ===========================================================================================================================================
 
-
-Deocamdata atat
