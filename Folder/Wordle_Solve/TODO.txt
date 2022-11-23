@@ -5,9 +5,9 @@ TASK-URI MIHAI:
 
 -Update fisiere X (Mihai)
 
--Read si Write in game cu functiii!!!!
+-Read si Write in game cu functiii!!!! (Mihai)
 
--State sa nu fie global -----
+-State sa nu fie global ---- Tot global e
 
 TASK-URI VLAD:
 

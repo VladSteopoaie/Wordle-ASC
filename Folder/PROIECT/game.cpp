@@ -61,7 +61,6 @@ int Read(char *c)
         {
             cout << c[i];
         }
-    cout << "\n";
     return 0;
 }
 
@@ -279,7 +278,7 @@ void word_verifier(string correct_word, string guess_word, bool &verif){
         }
     }
     for (int i=0;i<5;i++)
-        cout<<state[i]<<' ';
+        cout<<state[i];
     cout<<'\n'<<'\n';
      if(cnt == 5){                              /// verific daca toate literele se potrivesc
         verif = true;
