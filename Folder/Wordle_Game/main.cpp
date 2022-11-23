@@ -34,7 +34,7 @@ void init_dictionar()
 
 }
 
-void menu_text() //introducerea jocului
+void menu_text() ///introducerea jocului
 {string text;
     text="Salut, hai sa jucam jocul Wordle!";
     for (int i=0;i<text.size();i++)
@@ -55,8 +55,9 @@ void menu_text() //introducerea jocului
 
 }
 
-void instructions() //cum se joca jocul.
+void instructions() ///cum se joca jocul
 {string text;
+    cout<<'\n';
     text="In acest joc, scopul este simplu: Incearca sa ghicesti un cuvant de 5 litere! ";
     for (int i=0;i<text.size();i++)
     cout<<text[i],usleep(30000);
@@ -100,7 +101,7 @@ void beginning_text()
         cout<<text[i],usleep(30000);
 }
 
-void uppercase(string &s) //inputurile vor fi transformate in cuvinte cu litere mari, ca sa nu fie case-sensitive jocul
+void uppercase(string &s) ///inputurile vor fi transformate in cuvinte cu litere mari, ca sa nu fie case-sensitive jocul
 {
     for (int i=0;i<s.size();i++)
     {
@@ -109,7 +110,7 @@ void uppercase(string &s) //inputurile vor fi transformate in cuvinte cu litere 
     }
 }
 
-void menu_checker(string s) //verificarile inputurilor din meniu, daca vrem sa jucam, sa rezolvam sau instructiuni
+void menu_checker(string s) ///verificarile inputurilor din meniu, daca vrem sa jucam, sa rezolvam sau instructiuni
 {string text;
     if (s=="JOACA")
         in_menu=false,in_game=true;
@@ -121,7 +122,7 @@ void menu_checker(string s) //verificarile inputurilor din meniu, daca vrem sa j
         {
             text="Aceasta nu este o comanda valida!";
             for (int i=0;i<text.size();i++)
-                cout<<"text[i]",usleep(30000);
+                cout<<text[i],usleep(30000);
             cout<<'\n';
         }
 
