@@ -306,7 +306,7 @@ int main()
     }
 
     // Afisam cuvantul ghicit
-    std::cout << guess << std::endl;
+    //std::cout << guess << std::endl;
     // OBSERVATII
     //  trebuie sa tinem minte numarul de guess-uri
     //  trebuie sa tinem minte toate guess-urile pana la cuvantul ghicit

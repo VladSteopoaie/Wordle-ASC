@@ -222,7 +222,7 @@ int main()
 
     // Poate niste citiri inainte... daca nu dam direct primul guess "TAREI"
     bool ghicit = false;
-    std::string guess = "TAREI";
+    std::string guess = "TAREI"; // TAREI e openerul uzual
     if(Write(guess) != 0)
     {
         return -1;
