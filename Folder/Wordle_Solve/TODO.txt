@@ -5,7 +5,7 @@ TASK-URI MIHAI:
 
 -Update fisiere X (Mihai)
 
--Read si Write in game cu functiii!!!! (Mihai)
+-Read si Write in game cu functiii!!!! X (Mihai)
 
 -State sa nu fie global ---- Tot global e
 
@@ -17,6 +17,9 @@ TASK-URI VLAD:
 
 -Input Wordle_Game X (Vlad)
 
+-apelare solver din game X (Vlad)
+
+-"rm guess" automat in solver X (Vlad)
 
 
 
@@ -29,8 +32,6 @@ TASK-URI COMUNE:
   -> 4. CALCULAM SI INFORMATIA = LOG2(1 / PROBABILITATE) X (Vlad si Mihai)
   -> 5. SUMA DE PROBABILITATI (ENTROPIA) = SUM(PROBABILITATE * INFORMATIE) X (Vlad si Mihai)
   
--apelare solver din game
--"rm guess" automat in solver X (Vlad)
 
 -simulare:
   -pt toate CUVINTELE

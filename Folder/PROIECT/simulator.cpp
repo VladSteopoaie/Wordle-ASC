@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <vector>
 #include <string.h>
+#include <sys/wait.h>
 
 using namespace std;
 
@@ -351,35 +352,8 @@ void game_over()
 
 int main()
 {
-    string guess, cuv;
-    srand(time(NULL));
-    init_dictionar();
-    menu_text();
-
-    while (in_menu)
-    {
-        beginning_text();
-        cin >> guess;
-        uppercase(guess);
-        menu_checker(guess);
-    }
-
-    while (in_game) /// aici va incepe jocul jucat de o persoana
-    {
-        if (ok == false)                 /// daca nu a fost ales un cuvant
-            word_getter(cuv), ok = true; /// alegerea cuvantului
-        in_game_text();
-        cin >> guess;
-        uppercase(guess);
-        if (!check_validity(guess)) /// daca nu este valid cuvantul(nu e format din 5 caractere, doar litere sau nu apartine Dictionarului Limbii Romane)
-            continue;
-        contor++;                         /// daca este valid, inseamna ca s-a produs o incercare buna si se tine minte
-        word_verifier(cuv, guess, verif); /// verifica apartenenta literelor prin functia word_verifier. bineinteles si guess-ul va fi case insensitive
-        if (verif == true)                /// daca a gasit cuvantul potrivit
-            word_guessed_text();
-    }
-
-    if (in_solver) // daca programul a ajuns in solver
+    string cuv;
+    while (f >> cuv)
     {
         // impartim procesul in doua
         int id = fork();
@@ -406,12 +380,6 @@ int main()
             }
             while (in_solver) // aici va incepe jocul sa se rezolve singur
             {
-                if (ok == false)
-                {
-                    word_getter(cuv);
-                    cout << '\n';
-                    ok = true;
-                }
 
                 char c[6];
                 if (Read(c) != 0)
