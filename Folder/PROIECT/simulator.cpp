@@ -73,7 +73,6 @@ int Write(char *v)
     return 0;
 }
 
-
 // Aici se stabileste informatia cuvantului
 void word_verifier(string correct_word, string guess_word, bool &verif)
 {
@@ -102,7 +101,7 @@ void word_verifier(string correct_word, string guess_word, bool &verif)
                 state[i] = 'R'; /// pun in state[i] 'R' daca nu gasesc o litera din cuvantul introdus in celalalt
         }
     }
-    
+
     if (cnt == 5)
     { /// verific daca toate literele se potrivesc
         verif = true;
@@ -123,9 +122,15 @@ int main()
 {
     string cuv;
     int nrCuv = 0;
+    if (mkfifo(FIFO, 0777) != 0)
+    {
+        perror("FIFO: ");
+        return -1;
+    }
     while (f >> cuv)
     {
-        nrCuv ++;
+        nrCuv++;
+        fo << nrCuv << ". ";
         // impartim procesul in doua
         int id = fork();
         if (id == -1) // verificam erori
@@ -145,11 +150,7 @@ int main()
         {
             // Creeaza fisierul pentru IPC
             fo << cuv << ": ";
-            if (mkfifo(FIFO, 0777) != 0)
-            {
-                perror("FIFO: ");
-                return -1;
-            }
+
             int contor = 0;
             while (in_solver) // aici va incepe jocul sa se rezolve singur
             {
@@ -173,20 +174,17 @@ int main()
                 {
                     return -1;
                 }
-
                 if (verif)
                 {
-                    printf("%d. Ai gasit cuvantul %s in %d incercari\n", nrCuv, c, contor);
                     fo << contor << '\n';
                     break;
                 }
-                fo.flush();
             }
-
-            remove(FIFO); // stergem fifo-ul
+            fo.flush();
             wait(NULL); // asteptam procesul copil
         }
     }
+    remove(FIFO); // stergem fifo-ul
     game_over();
     return 0;
 }
