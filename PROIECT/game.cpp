@@ -408,13 +408,55 @@ int main()
             {
                 if (ok == false)
                 {
-                    word_getter(cuv);
+                    // aici o sa lasam userul sa aleaga optiunea pe care o vrea la solver
+                    cout << "Alege cum vrei sa rezolve: \n";
+                    cout << "- Alege tu un cuvant din lista de cuvinte => 1\n";
+                    cout << "- Lasa jocul sa aleaga un cuvant aleator din lista de cuvinte => 2\n";
+                    char raspuns;
+                    bool gresit = false;
+                    do // daca nu da comanda buna repetam procesul
+                    {
+                        cin >> raspuns;
+                        while(cin.get() != '\n'){;}
+                        if (raspuns == '1')
+                        {
+                            // daca intra aici inseamna ca o sa aleaga un cuvant din lista
+                            gresit = false;
+                            bool corect = true;
+                            cout << "Alege un cuvant din lista de cuvinte: ";
+                            do // cat timp cuvantul nu apare in lista il punem sa mai aleaga odata
+                            {
+                                cin >> cuv;
+                                uppercase(cuv);
+                                cout << endl;
+                                corect = list_verifier(cuv);
+                                if (!corect)
+                                    cout << "Cuvantul nu apartine de lista, mai alege odata: ";
+                            } while (!corect);
+                        }
+                        else if (raspuns == '2')
+                        {
+                            //daca a ajuns aici inseamna ca programul nostru trebuie 
+                            //sa aleaga un cuvant random
+                            gresit = false;
+                            word_getter(cuv);
+                        }
+                        else
+                        {
+                            //nu a bagat comanda buna
+                            gresit = true;
+                        }
+                        if (gresit)
+                        {
+                            cout << "Codul nu este corect mai introdu odata (1 sau 2): \n";
+                        }
+                    } while (gresit);
                     cout << '\n';
-                    ok = true;
+                    ok = true; // punem ok=true ca sa nu ne mai intre in acest if
                 }
 
                 char c[6];
-                if (Read(c) != 0)
+                if (Read(c) != 0) // citim guess-ul
                 {
                     return -1;
                 }
@@ -422,9 +464,9 @@ int main()
                 cout << "\n";
                 contor++;
 
-                word_verifier(cuv, c, verif);
+                word_verifier(cuv, c, verif); //verificam si setam state 
 
-                if (Write(state) != 0)
+                if (Write(state) != 0) // scriem state pentru celalalt program sa citeasca
                 {
                     return -1;
                 }
