@@ -26,4 +26,29 @@ ghiceste cuvantul, poate sa aleaga sa primeasca un cuvant nou, reluand jocul.
 
 II) Algoritmul care rezolva jocul Wordle
 
-III) Comunicarea dintre programe, realizata prin IPC
+Cum ghiceste?
+
+-Programul trebuie sa ghiceasca un cuvant de 5 litere dintr-o lista de cuvinte.
+-Acest lucru se realizeaza cu ajutorul unor state-uri pe care le primeste de la joc in sine.
+-De exemplu, daca programul "solve" incearca cuvantul VREAU acesta v-a primi de la programul "game" un state (RRYRG, unde R - rosu, litera nu apare in cuvant; Y - galben, litera apare in cuvant dar nu este pe acea pozitie; G - verde, litera se afla in cuvant pe acea pozitie)
+-In functie de state-ul primit programul calculeaza entropia tuturor cuvintelor care respecta acel state si alege cuvantul cu entropia cea mai mare pe care il propune ca urmator guess.
+
+Cum calculeaza entropia?
+
+-Programul face, pentru fiecare cuvant din lista de cuvinte, un backtraking de produs cartezian si trece prin toate state-urile posibile (RRRRR, RRRRY, RRRRG, RRRYR, ...).
+-Pentru fiecare state din backtracking programul verfifica cate cuvinte din lista respecta acel state (ex: cuvantul VREAU si cuvantul TAREI sunt echivalente luand in considerare state-ul RYYYR).
+-Numarul de cuvinte obtinut / numarul total de cuvinte din lista = probabilitatea ca un cuvant sa respecte acel state. 
+-1 / probabilitate = informatia
+-Iar entropia este media ponderata a informatiilor
+-Dupa programul alege cuvantul cu entropia cea mai mare ca si urmator guess
+-La final in lista de cuvinte se pun doar cuvintele care respecta state-ul primit
+
+
+III) Comunicarea dintre programe
+
+-Realizat prin named pipes (FIFO)
+-Programul "game" creeaza un fisier fifo si un proces copil prin care se executa programul de "solve"
+-Cele doua programe comunica prin fisierul fifo numit "guess"
+
+
+
