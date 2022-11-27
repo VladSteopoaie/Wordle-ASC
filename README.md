@@ -5,6 +5,18 @@ Neagoe Mihai (grupa 144)
 Barbu Eduard (grupa 144)
 Șteopoaie Vlad (grupa 144)
 
+Continutul proiectului:
+-cuvinte_gasite (copy).txt - aici am salvat fiecare cuvant si de cate incercari a fost nevoie pentru ca programul sa il ghiceasca (am calculat si media numarului de incercari care e la finalul fisierului = 4.3739)
+-cuvinte_wordle.txt - este lista cu toate cuvintele 
+-entropie_cuvinte.txt - aici este calculata entropia tuturor cuvintelor pentru a afla primul guess (cea mai mare este TAREI cu entropia 6.41381)
+
+-directorul PROIECT:
+	-game.cpp este programul intregului joc (fara partea de rezolvare)
+	-solve.cpp este programul de rezolvare a jocului
+	-simulator.cpp este un program care care trece prin toate cuvintele din lista de cuvinte si calculeaza de cate incercari este nevoie pentru a ghici fiecare cuvant
+	-cuvinte1.txt si cuvinte2.txt sunt fisierele unde programul de rezolvare lucreaza (in 1 se afla cuvintele prin care calculeaza entropia sin in 2 sunt cuvintele care respecta regula primita de la game.cpp). Fisierul 1 este mai apoi rescris cu cuvintele din fisierul 2 si se repeta procesul
+	-cuvinte_gasite.txt este fisierul de output pentru simulator.cpp
+
 
 Descrierea proiectului:
 
